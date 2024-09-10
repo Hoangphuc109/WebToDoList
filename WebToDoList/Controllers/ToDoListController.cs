@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebToDoList.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace WebToDoList.Controllers
 {
@@ -51,34 +52,39 @@ namespace WebToDoList.Controllers
         }
 
         // PUT: /ToDoList/5
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutToDoList(int id, ToDoList toDoList)
-        //{
-        //    if (id != toDoList.Id_work)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutToDoList(int id, ToDoList toDoList)
+        {
+            if (id != toDoList.Id_work)
+            {
+                return BadRequest();
+            }
 
-        //    _context.Entry(toDoList).State = EntityState.Modified;
+            _context.Entry(toDoList).State = EntityState.Modified;
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ToDoListExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ToDoListExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
+
+        private bool ToDoListExists(int id)
+        {
+            throw new NotImplementedException();
+        }
 
         // DELETE: /ToDoList/5
         [HttpDelete("{id}")]
